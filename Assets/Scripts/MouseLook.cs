@@ -32,7 +32,7 @@ public class MouseLook : MonoBehaviour
 
         transform.LookAt(target);
 
-        if (Input.GetKey(KeyCode.LeftShift)) //Free look
+        if (Input.GetKey(KeyCode.LeftControl)) //Free look
         {
             target.rotation = Quaternion.Euler(mouseY, mouseX, 0);
         }
