@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class MovementStateManager : MonoBehaviour
 {
     public float currentMoveSpeed;
-
     public float walkSpeed, walkBackSpeed;
     public float runSpeed, runBackSpeed;
     public float crouchSpeed, crouchBackSpeed;
@@ -26,19 +26,22 @@ public class MovementStateManager : MonoBehaviour
 
     private Vector3 velocity;
 
-    MovementBaseState currentState;
+    public MovementBaseState currentState;
 
     public IdleState Idle = new IdleState();
     public WalkState Walk = new WalkState();
     public CrouchState Crouch = new CrouchState();
     public RunState Run = new RunState();
 
+    //public CrawlState Crawl = new CrawlState();
+
     [HideInInspector] public Animator anim;
+
+    public Rig playerRig;
 
     private void Awake()
     {
         controller = this.GetComponent<CharacterController>();
-
         anim = this.GetComponent<Animator>();
     }
 
@@ -65,6 +68,7 @@ public class MovementStateManager : MonoBehaviour
     {
         currentState = state;
         currentState.EnterState(this);
+        
     }
 
     private void GetDirectionMove(float inputX, float inputY)

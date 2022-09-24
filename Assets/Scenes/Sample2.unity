@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -496,7 +496,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &495217839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -854,7 +854,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &620641077
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1176,7 +1176,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &1091735447
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1575,7 +1575,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1320360633
 Transform:
   m_ObjectHideFlags: 0
@@ -1727,7 +1727,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &1490445102
 Light:
   m_ObjectHideFlags: 0
@@ -1823,7 +1823,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &1514792035
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1928,9 +1928,16 @@ MonoBehaviour:
   fireRate: 0.1
   semiAuto: 0
   bullet: {fileID: 4924238349008114340, guid: f26a0a6c4bb4da64bb76b5ae1b8f612e, type: 3}
-  barrePos: {fileID: 926437183}
+  firePos: {fileID: 0}
   bulletVelocity: 500
   bulletPerShot: 1
+  SMG_Shoot_Sounds: {fileID: 0}
+  SMG_MagLoadSound: {fileID: 0}
+  SMG_MagUnLoadSound: {fileID: 0}
+  SMG_ReloadSlideSoudd: {fileID: 0}
+  audioSource: {fileID: 0}
+  muzzleFlashParticle: {fileID: 0}
+  bulletShellParticle: {fileID: 0}
 --- !u!1 &1606654946
 GameObject:
   m_ObjectHideFlags: 0
@@ -3369,7 +3376,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1942243966901492
 GameObject:
   m_ObjectHideFlags: 0
@@ -4594,7 +4601,6 @@ MonoBehaviour:
   aimMask:
     serializedVersion: 2
     m_Bits: 65
-  rifleOne: {fileID: 969960708}
 --- !u!114 &95351788434628564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4624,6 +4630,7 @@ MonoBehaviour:
     m_Bits: 129
   gravity: -9.81
   anim: {fileID: 0}
+  playerRig: {fileID: 0}
 --- !u!143 &95351788434628565
 CharacterController:
   m_ObjectHideFlags: 0

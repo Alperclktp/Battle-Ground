@@ -27,5 +27,12 @@ public class IdleState : MovementBaseState
         {
             movement.SwitchState(movement.Crouch);
         }
+
+        /*
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            movement.SwitchState(movement.Crawl);
+        }
+        */
     }
 }

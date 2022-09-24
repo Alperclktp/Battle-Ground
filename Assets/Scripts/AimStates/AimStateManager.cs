@@ -5,7 +5,7 @@ using Cinemachine;
 
 public class AimStateManager : MonoBehaviour
 {
-    AimBaseState currentState;
+    public AimBaseState currentState;
 
     public HipFireState HipFire = new HipFireState();
     public AimState Aim = new AimState();
@@ -34,7 +34,13 @@ public class AimStateManager : MonoBehaviour
 
     [SerializeField] private LayerMask aimMask;
 
-    public GameObject rifleOne;
+    private float xFollowPos;
+    private float yFollowPos, ogYPos;
+
+    [SerializeField] private float crochCamHeight = 0.6f;
+    [SerializeField] private float sholderSwapSpeed = 10;
+
+    private MovementStateManager moving;
 
     private void Awake()
     {
@@ -45,9 +51,16 @@ public class AimStateManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
 
+        moving = GetComponent<MovementStateManager>();
         vCam = GetComponentInChildren<CinemachineVirtualCamera>();
 
         hipFov = vCam.m_Lens.FieldOfView;
+
+        xFollowPos = cameraFollowPos.localPosition.x;
+
+        ogYPos = cameraFollowPos.localPosition.y;
+
+        yFollowPos = ogYPos;
 
         SwitchState(HipFire);
     }
@@ -55,14 +68,11 @@ public class AimStateManager : MonoBehaviour
     private void Update()
     {
         xAxis += Input.GetAxisRaw("Mouse X") * sensitivity;
-
         yAxis -= Input.GetAxisRaw("Mouse Y") * sensitivity;
 
         yAxis = Mathf.Clamp(yAxis, -80f, 80);
 
         vCam.m_Lens.FieldOfView = Mathf.Lerp(vCam.m_Lens.FieldOfView, currentFov, fovSmoothSpeed * Time.deltaTime);
-
-        currentState.UpdateState(this);
 
         Vector2 screenCentre = new Vector2(Screen.width / 2 , Screen.height / 2);
 
@@ -72,6 +82,10 @@ public class AimStateManager : MonoBehaviour
         {
             aimPos.position = Vector3.Lerp(aimPos.position, hit.point, aimSmoothSpeed * Time.deltaTime);
         }
+
+        MoveCamera();
+
+        currentState.UpdateState(this);
     }
 
     private void LateUpdate()
@@ -85,5 +99,19 @@ public class AimStateManager : MonoBehaviour
     {
         currentState = state;
         currentState.EnterState(this);
+    }
+
+    public void MoveCamera()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftAlt)) { xFollowPos = -xFollowPos; }
+        if(moving.currentState == moving.Crouch) { yFollowPos = crochCamHeight; }
+        else
+        {
+            yFollowPos = ogYPos;
+        }
+
+        Vector3 newFollowPos = new Vector3(xFollowPos, yFollowPos, cameraFollowPos.localPosition.z);
+
+        cameraFollowPos.localPosition = Vector3.Lerp(cameraFollowPos.localPosition, newFollowPos, sholderSwapSpeed * Time.deltaTime);
     }
 }
