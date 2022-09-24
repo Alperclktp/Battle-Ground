@@ -11,10 +11,15 @@ public class DefaultState : ActionBaseState
 
     public override void UpdateState(ActionStateManager actions)
     {
-        actions.rHandAim.weight = Mathf.Lerp(actions.rHandAim.weight, 1, 10 * Time.deltaTime);
+        actions.rightHandAim.weight = Mathf.Lerp(actions.rightHandAim.weight, 1, 10 * Time.deltaTime);
         actions.leftHandIK.weight = Mathf.Lerp(actions.leftHandIK.weight, 1, 10 * Time.deltaTime);
 
         if (Input.GetKeyDown(KeyCode.R) && CanReload(actions))
+        {
+            actions.SwitchState(actions.Reload);
+        }
+
+        if(actions.ammo.currentAmmo == 0 && actions.ammo.extraAmmo != 0)
         {
             actions.SwitchState(actions.Reload);
         }

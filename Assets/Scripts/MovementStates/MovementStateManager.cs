@@ -5,6 +5,18 @@ using UnityEngine.Animations.Rigging;
 
 public class MovementStateManager : MonoBehaviour
 {
+    [HideInInspector] public CharacterController controller;
+
+    public MovementBaseState currentState;
+
+    [HideInInspector] public Animator anim;
+
+    public IdleState Idle = new IdleState();
+    public WalkState Walk = new WalkState();
+    public CrouchState Crouch = new CrouchState();
+    public RunState Run = new RunState();
+
+    [Header("Player Movement Settings")]
     public float currentMoveSpeed;
     public float walkSpeed, walkBackSpeed;
     public float runSpeed, runBackSpeed;
@@ -14,30 +26,16 @@ public class MovementStateManager : MonoBehaviour
 
     [HideInInspector] public Vector3 direction;
 
-    public CharacterController controller;
-
+    [Header("Check Ground")]
+    [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float groundYOffset;
-
     [SerializeField] private LayerMask groundMask;
 
     private Vector3 spherePos;
 
-    [SerializeField] private float gravity = -9.81f;
-
     private Vector3 velocity;
 
-    public MovementBaseState currentState;
-
-    public IdleState Idle = new IdleState();
-    public WalkState Walk = new WalkState();
-    public CrouchState Crouch = new CrouchState();
-    public RunState Run = new RunState();
-
     //public CrawlState Crawl = new CrawlState();
-
-    [HideInInspector] public Animator anim;
-
-    public Rig playerRig;
 
     private void Awake()
     {
@@ -56,10 +54,10 @@ public class MovementStateManager : MonoBehaviour
         vertical = Input.GetAxis("Vertical");
 
         GetDirectionMove(horizontal, vertical);
+
         Gravity();
 
-        anim.SetFloat("Horizontal", horizontal);
-        anim.SetFloat("Vertical", vertical);
+        SetAniamtions();
 
         currentState.UpdateState(this);
     }
@@ -74,7 +72,6 @@ public class MovementStateManager : MonoBehaviour
     private void GetDirectionMove(float inputX, float inputY)
     {
         direction = transform.forward * inputY + transform.right * inputX;
-
         controller.Move(direction.normalized * currentMoveSpeed * Time.deltaTime);
     }
 
@@ -90,6 +87,12 @@ public class MovementStateManager : MonoBehaviour
         }
 
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    private void SetAniamtions()
+    {
+        anim.SetFloat("Horizontal", horizontal);
+        anim.SetFloat("Vertical", vertical);
     }
 
     private bool IsGrounded()

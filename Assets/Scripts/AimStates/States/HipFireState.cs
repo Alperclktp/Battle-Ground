@@ -7,7 +7,6 @@ public class HipFireState : AimBaseState
     public override void EnterState(AimStateManager aim)
     {
         aim.anim.SetBool("isAiming", false);
-
         aim.currentFov = aim.hipFov;
     }
 

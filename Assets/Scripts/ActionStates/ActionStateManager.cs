@@ -6,20 +6,18 @@ using UnityEngine.Animations.Rigging;
 public class ActionStateManager : MonoBehaviour
 {
     [HideInInspector] public ActionBaseState currentState;
-
-    private WeaponManager weaponManager;
+    [HideInInspector] public WeaponAmmo ammo;
+    [HideInInspector] public Animator anim;
 
     public DefaultState Default = new DefaultState();
     public ReloadState Reload = new ReloadState();
 
+    private WeaponManager weaponManager;
+
     public GameObject currentWeapon;
 
-    [HideInInspector] public WeaponAmmo ammo;
-
-    [HideInInspector] public Animator anim;
-
-    public MultiAimConstraint rHandAim;
-
+    [Header("Animationg Rigging IK")]
+    public MultiAimConstraint rightHandAim;
     public TwoBoneIKConstraint leftHandIK;
 
     private void Start()
@@ -27,9 +25,7 @@ public class ActionStateManager : MonoBehaviour
         SwitchState(Default);
 
         anim = GetComponent<Animator>();
-
         weaponManager = GetComponentInChildren<WeaponManager>();
-
         ammo = currentWeapon.GetComponent<WeaponAmmo>();
     }
 
@@ -47,10 +43,8 @@ public class ActionStateManager : MonoBehaviour
     public void WeaponReloaded()
     {
         ammo.Reload();
-
         SwitchState(Default);
     }
-
 
     public void MagLoad()
     {

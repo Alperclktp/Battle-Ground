@@ -2,12 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum WeaponModeState
+{
+    Auto,
+    Single
+}
+
 public class WeaponManager : MonoBehaviour
 {
-    [Header("Fire Rate")]
+    [HideInInspector] public AudioSource audioSource;
 
+    public WeaponModeState weaponModeState;
+
+    private AimStateManager aim;
+    private WeaponAmmo ammo;
+    private ActionStateManager actions;
+    private WeaponRecoil weaponRecoil;
+    private WeaponBloom weaponBloom;
+
+    public UIManager uIManager;
+
+    [Header("Fire Rate")]
     [SerializeField] private float fireRate;
-    [SerializeField] private bool semiAuto;
+    private bool semiAuto;
     private float fireRateTime;
 
     [Header("Bullet Properties")]
@@ -23,28 +40,15 @@ public class WeaponManager : MonoBehaviour
     public AudioClip SMG_MagUnLoadSound;
     public AudioClip SMG_ReloadSlideSoudd;
 
-    [HideInInspector] public AudioSource audioSource;
-
-    private AimStateManager aim;
-
-    private WeaponAmmo ammo;
-
-    private ActionStateManager actions;
-
-    private WeaponRecoil weaponRecoil;
-
-    private WeaponBloom weaponBloom;
+    [Header("VFX")]
+    public ParticleSystem muzzleFlashParticle;
+    public ParticleSystem bulletShellParticle;
 
     //private Light muzzleFlashLight;
 
     //private float lightIntensity;
 
     //[SerializeField] private float lightReturnSpeed = 2;
-
-    [Header("VFX")]
-    public ParticleSystem muzzleFlashParticle;
-
-    public ParticleSystem bulletShellParticle;
 
     private void Start()
     {
@@ -65,11 +69,13 @@ public class WeaponManager : MonoBehaviour
     }
 
     private void Update()
-    {        
+    {
         if (ShouldFire())
         {
             Fire();
         }
+
+        SwitchWeaponMode(uIManager.currentWeaponModeText.text);
 
         //muzzleFlashLight.intensity = Mathf.Lerp(muzzleFlashLight.intensity, 0, lightReturnSpeed * Time.deltaTime);
     }
@@ -84,13 +90,13 @@ public class WeaponManager : MonoBehaviour
 
         if (actions.currentState == actions.Reload) { return false; }
 
-        if(semiAuto && Input.GetMouseButton(0)) { return true; }
+        if (weaponModeState == WeaponModeState.Auto && Input.GetMouseButton(0)) { return true; }
 
-        if(!semiAuto && Input.GetMouseButtonDown(0)) { return true; }
+        if (weaponModeState == WeaponModeState.Single && Input.GetMouseButtonDown(0)) { return true; }
         else
         {
             return false;
-        }    
+        }
     }
 
     private void Fire()
@@ -110,7 +116,7 @@ public class WeaponManager : MonoBehaviour
 
         ammo.currentAmmo--;
 
-        for(int i = 0; i < bulletPerShot; i++)
+        for (int i = 0; i < bulletPerShot; i++)
         {
             GameObject currentBullet = Instantiate(bullet, firePos.position, firePos.rotation);
             Rigidbody rb = currentBullet.GetComponent<Rigidbody>();
@@ -128,5 +134,39 @@ public class WeaponManager : MonoBehaviour
     private void TriggerBulletShell()
     {
         bulletShellParticle.Emit(1);
+    }
+
+    private void SwitchWeaponMode(string modeText)
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            semiAuto = !semiAuto;
+
+            StartCoroutine(IEWeaponModeTextVisibiltyTime());
+        }
+
+        if (semiAuto)
+        {
+            weaponModeState = WeaponModeState.Auto;
+
+            uIManager.currentWeaponModeText.text = modeText = "Mode: Auto";
+        }
+        else
+        {
+            weaponModeState = WeaponModeState.Single;
+
+            uIManager.currentWeaponModeText.text = modeText = "Mode: Single";
+
+        }
+    }
+
+    private IEnumerator IEWeaponModeTextVisibiltyTime()
+    {
+        uIManager.currentWeaponModeText.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+
+        uIManager.currentWeaponModeText.gameObject.SetActive(false);
+
     }
 }

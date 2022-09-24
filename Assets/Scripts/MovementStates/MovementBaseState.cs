@@ -7,9 +7,9 @@ public abstract class MovementBaseState
     /*
     public virtual void EnterState(MovementStateManager movementStateManager)
     {
-        Debug.Log("SFQWFE");
+        Debug.Log("Baslangicta veri okuturken");
 
-        base ile kullanýlýyor.
+        base ile kullaniliyor.
     }
     */
 }
