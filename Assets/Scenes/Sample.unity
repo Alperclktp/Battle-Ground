@@ -2922,8 +2922,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1920599898}
-  - component: {fileID: 1920599897}
-  - component: {fileID: 1920599896}
   m_Layer: 0
   m_Name: AimPosition
   m_TagString: Untagged
@@ -2931,56 +2929,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!23 &1920599896
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1920599894}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1920599897
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1920599894}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1920599898
 Transform:
   m_ObjectHideFlags: 0
@@ -3169,6 +3117,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponSettingsSO: {fileID: 11400000, guid: 4d65939be25ca8d498587c2ea5fefe70, type: 2}
+  currentExtraAmmo: 0
+  currentClipSize: 0
 --- !u!114 &2015633462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6138,14 +6088,17 @@ MonoBehaviour:
   runBackSpeed: 5
   crouchSpeed: 2
   crouchBackSpeed: 1
+  airSpeed: 1
   horizontal: 0
   vertical: 0
   direction: {x: 0, y: 0, z: 0}
   gravity: -9.81
-  groundYOffset: 0.6
+  jumpForce: 7
+  groundYOffset: -0.17
   groundMask:
     serializedVersion: 2
-    m_Bits: 129
+    m_Bits: 65
+  canJump: 0
 --- !u!143 &95880591241329429
 CharacterController:
   m_ObjectHideFlags: 0
@@ -6157,10 +6110,10 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.81
-  m_Radius: 0.2
+  m_Height: 1.8
+  m_Radius: 0.25
   m_SlopeLimit: 45
-  m_StepOffset: 0.06
+  m_StepOffset: 0.3
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.9, z: 0}
