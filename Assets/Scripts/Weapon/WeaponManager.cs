@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum WeaponModeState
-{
-    Auto,
-    Single
-}
-
 public class WeaponManager : MonoBehaviour
 {
     [HideInInspector] public AudioSource audioSource;
 
-    public WeaponModeState weaponModeState;
+    [SerializeField] private WeaponSettings weaponSettingsSO;
 
     private AimStateManager aim;
     private WeaponAmmo ammo;
@@ -22,23 +16,12 @@ public class WeaponManager : MonoBehaviour
 
     public UIManager uIManager;
 
-    [Header("Fire Rate")]
-    [SerializeField] private float fireRate;
     private bool semiAuto;
     private float fireRateTime;
 
-    [Header("Bullet Properties")]
-    [SerializeField] private GameObject bullet;
+    [Header("Referances")]
     [SerializeField] private Transform firePos;
-    [SerializeField] private float bulletVelocity;
-    [SerializeField] private int bulletPerShot;
-
-    [Header("Weapon Sounds")]
-    [SerializeField] private AudioClip SMG_Shoot_Sound;
-    [SerializeField] private AudioClip SMG_Empty_Shoot_Sound;
-    public AudioClip SMG_MagLoadSound;
-    public AudioClip SMG_MagUnLoadSound;
-    public AudioClip SMG_ReloadSlideSoudd;
+    [SerializeField] private GameObject bullet;
 
     [Header("VFX")]
     public ParticleSystem muzzleFlashParticle;
@@ -61,7 +44,7 @@ public class WeaponManager : MonoBehaviour
 
         //muzzleFlashLight = GetComponentInChildren<Light>();
 
-        fireRateTime = fireRate;
+        fireRateTime = weaponSettingsSO.FireRate;
 
         //muzzleFlashLight.intensity = 0f;
 
@@ -84,15 +67,15 @@ public class WeaponManager : MonoBehaviour
     {
         fireRateTime += Time.deltaTime;
 
-        if (fireRateTime < fireRate) { return false; }
+        if (fireRateTime < weaponSettingsSO.FireRate) { return false; }
 
-        if (ammo.currentAmmo == 0) { return false; }
+        if (ammo.weaponSettingsSO.CurrentAmmo == 0) { return false; }
 
         if (actions.currentState == actions.Reload) { return false; }
 
-        if (weaponModeState == WeaponModeState.Auto && Input.GetMouseButton(0)) { return true; }
+        if (weaponSettingsSO.weaponFireModeState == WeaponFireModeState.Auto && Input.GetMouseButton(0)) { return true; }
 
-        if (weaponModeState == WeaponModeState.Single && Input.GetMouseButtonDown(0)) { return true; }
+        if (weaponSettingsSO.weaponFireModeState == WeaponFireModeState.Single && Input.GetMouseButtonDown(0)) { return true; }
         else
         {
             return false;
@@ -107,20 +90,20 @@ public class WeaponManager : MonoBehaviour
 
         firePos.localEulerAngles = weaponBloom.BloomAngle(firePos);
 
-        audioSource.PlayOneShot(SMG_Shoot_Sound);
+        audioSource.PlayOneShot(weaponSettingsSO.ShootSound);
 
         weaponRecoil.TriggerRecoil();
 
         TriggerMuzzleFlash();
         TriggerBulletShell();
 
-        ammo.currentAmmo--;
+        ammo.weaponSettingsSO.CurrentAmmo--;
 
-        for (int i = 0; i < bulletPerShot; i++)
+        for (int i = 0; i < weaponSettingsSO.BulletPerShot; i++)
         {
             GameObject currentBullet = Instantiate(bullet, firePos.position, firePos.rotation);
             Rigidbody rb = currentBullet.GetComponent<Rigidbody>();
-            rb.AddForce(firePos.forward * bulletVelocity, ForceMode.Impulse);
+            rb.AddForce(firePos.forward * weaponSettingsSO.BulletVelocity, ForceMode.Impulse);
         }
     }
 
@@ -147,13 +130,13 @@ public class WeaponManager : MonoBehaviour
 
         if (semiAuto)
         {
-            weaponModeState = WeaponModeState.Auto;
+            weaponSettingsSO.weaponFireModeState = WeaponFireModeState.Auto;
 
             uIManager.currentWeaponModeText.text = modeText = "Mode: Auto";
         }
         else
         {
-            weaponModeState = WeaponModeState.Single;
+            weaponSettingsSO.weaponFireModeState = WeaponFireModeState.Single;
 
             uIManager.currentWeaponModeText.text = modeText = "Mode: Single";
 

@@ -5,45 +5,48 @@ using UnityEngine;
 
 public class WeaponAmmo : MonoBehaviour
 {
-    public int clipSize;
+    public WeaponSettings weaponSettingsSO;
 
-    public float extraAmmo;
+    public float currentExtraAmmo;
 
-    [HideInInspector] public float currentAmmo;
+    public int currentClipSize;
 
     private void Start()
     {
-        currentAmmo = clipSize;
+        currentExtraAmmo = weaponSettingsSO.ExtraAmmo;
+        currentClipSize = weaponSettingsSO.ClipSize;
+
+        weaponSettingsSO.CurrentAmmo = weaponSettingsSO.ClipSize;
+
     }
 
     public void Reload()
     {
-        if(extraAmmo >= clipSize)
+        if (currentExtraAmmo >= weaponSettingsSO.ClipSize)
         {
-            int ammoToReaload = (int)(clipSize - currentAmmo);
+            int ammoToReaload = (int)(weaponSettingsSO.ClipSize - weaponSettingsSO.CurrentAmmo);
 
-            extraAmmo -= ammoToReaload;
+            currentExtraAmmo -= ammoToReaload;
 
-            currentAmmo += ammoToReaload;
+            weaponSettingsSO.CurrentAmmo += ammoToReaload;
         }
-        else if (extraAmmo > 0)
+        else if (currentExtraAmmo > 0)
         {
-            if (extraAmmo + currentAmmo > clipSize)
+            if (currentExtraAmmo + weaponSettingsSO.CurrentAmmo > weaponSettingsSO.ClipSize)
             {
-                int leftOverAmmo = (int)(extraAmmo + currentAmmo - clipSize);
+                int leftOverAmmo = (int)(currentExtraAmmo + weaponSettingsSO.CurrentAmmo - weaponSettingsSO.ClipSize);
 
-                extraAmmo = leftOverAmmo;
+                currentExtraAmmo = leftOverAmmo;
 
-                currentAmmo = clipSize;
+                currentExtraAmmo = weaponSettingsSO.ClipSize;
             }
             else
             {
-                currentAmmo += extraAmmo;
+                weaponSettingsSO.CurrentAmmo += currentExtraAmmo;
 
-                extraAmmo = 0;
+                currentExtraAmmo = 0;
             }
         }
-
     }
 }
     

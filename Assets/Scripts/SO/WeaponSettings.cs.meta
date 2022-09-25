@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 4ffe097f87011ce4e9b619c44a97255e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - icon: {instanceID: 0}
+  - shootSound: {instanceID: 0}
+  - emptyShootSound: {instanceID: 0}
+  - magLoadSound: {instanceID: 0}
+  - magUnLoadSound: {instanceID: 0}
+  - reloadSlideSound: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

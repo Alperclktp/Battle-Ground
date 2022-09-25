@@ -5,6 +5,8 @@ using UnityEngine.Animations.Rigging;
 
 public class ActionStateManager : MonoBehaviour
 {
+    [SerializeField] private WeaponSettings weaponSettingsSO;
+
     [HideInInspector] public ActionBaseState currentState;
     [HideInInspector] public WeaponAmmo ammo;
     [HideInInspector] public Animator anim;
@@ -48,16 +50,16 @@ public class ActionStateManager : MonoBehaviour
 
     public void MagLoad()
     {
-        weaponManager.audioSource.PlayOneShot(weaponManager.SMG_MagLoadSound);
+        weaponManager.audioSource.PlayOneShot(weaponSettingsSO.MagLoadSound);
     }
 
     public void MagUnLoad()
     {
-        weaponManager.audioSource.PlayOneShot(weaponManager.SMG_MagUnLoadSound);
+        weaponManager.audioSource.PlayOneShot(weaponSettingsSO.MagUnLoadSound);
     }
 
     public void ReloadSlide()
     {
-        weaponManager.audioSource.PlayOneShot(weaponManager.SMG_ReloadSlideSoudd);
+        weaponManager.audioSource.PlayOneShot(weaponSettingsSO.ReloadSlideSound);
     }
 }
