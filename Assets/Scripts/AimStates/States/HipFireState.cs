@@ -7,6 +7,7 @@ public class HipFireState : AimBaseState
     public override void EnterState(AimStateManager aim)
     {
         aim.anim.SetBool("isAiming", false);
+        //MovementStateManager.Instance.playerRig.weight = 0;
         aim.currentFov = aim.hipFov;
     }
 
@@ -16,7 +17,9 @@ public class HipFireState : AimBaseState
         {
             aim.SwitchState(aim.Aim);
 
-            //aim.rifleOne.transform.localEulerAngles = new Vector3(-90, 0, 0);
+            //MovementStateManager.Instance.playerRig.weight = 1;
+
+            aim.currentWeapon.transform.localEulerAngles = new Vector3(aim.currentWeapon.transform.localEulerAngles.x, aim.currentWeapon.transform.localEulerAngles.y, 270);    
         }
     }
 }

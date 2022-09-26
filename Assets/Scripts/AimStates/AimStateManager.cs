@@ -40,6 +40,8 @@ public class AimStateManager : MonoBehaviour
     [SerializeField] private float crochCamHeight = 0.6f;
     [SerializeField] private float sholderSwapSpeed = 10;
 
+    public GameObject currentWeapon;
+
     private void Awake()
     {
         anim = this.GetComponent<Animator>();

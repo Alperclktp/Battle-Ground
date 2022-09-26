@@ -16,7 +16,7 @@ public class AimState : AimBaseState
         {
             aim.SwitchState(aim.HipFire);
 
-            //aim.rifleOne.transform.localEulerAngles = new Vector3(-90, 0, 40);
+            aim.currentWeapon.transform.localEulerAngles = new Vector3(aim.currentWeapon.transform.localEulerAngles.x, aim.currentWeapon.transform.localEulerAngles.y, 250);
         }
     }
 }

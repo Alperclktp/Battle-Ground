@@ -53,6 +53,8 @@ public class WeaponManager : MonoBehaviour
 
     private void Update()
     {
+        //if (ShouldFire() && Input.GetMouseButton(1)) WeaponManager'daki should fire a sað týk a bastýðýnda ateþ etmeyi ekle.
+        //HipFireState deki rig weight ini tekrar düzelt.
         if (ShouldFire())
         {
             Fire();

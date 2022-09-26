@@ -7,6 +7,8 @@ public class MovementStateManager : MonoBehaviour
 {
     [HideInInspector] public CharacterController controller;
 
+    public static MovementStateManager Instance;
+
     public MovementBaseState previousState;
     public MovementBaseState currentState;
 
@@ -17,6 +19,8 @@ public class MovementStateManager : MonoBehaviour
     public CrouchState Crouch = new CrouchState();
     public RunState Run = new RunState();
     public JumpState Jump = new JumpState();
+
+    //public CrawlState Crawl = new CrawlState();
 
     [Header("Player Movement Settings")]
     public float currentMoveSpeed;
@@ -40,12 +44,14 @@ public class MovementStateManager : MonoBehaviour
 
     private Vector3 velocity;
 
-    //public CrawlState Crawl = new CrawlState();
+    [HideInInspector] public Rig playerRig;
 
     private void Awake()
     {
-        controller = this.GetComponent<CharacterController>();
-        anim = this.GetComponent<Animator>();
+        Instance = this;
+        controller = GetComponent<CharacterController>();
+        playerRig = GetComponentInChildren<Rig>();
+        anim = GetComponent<Animator>();
     }
 
     private void Start()
