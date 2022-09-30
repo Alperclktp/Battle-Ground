@@ -19,7 +19,7 @@ public class DefaultState : ActionBaseState
             actions.SwitchState(actions.Reload);
         }
 
-        if(actions.ammo.weaponSettingsSO.CurrentAmmo == 0 && actions.ammo.weaponSettingsSO.ExtraAmmo != 0)
+        if(actions.ammo.weaponSettingsSO.CurrentAmmo == 0 && actions.ammo.currentExtraAmmo != 0)
         {
             actions.SwitchState(actions.Reload);
         }
@@ -27,8 +27,8 @@ public class DefaultState : ActionBaseState
 
     private bool CanReload(ActionStateManager action)
     {
-        if (action.ammo.weaponSettingsSO.CurrentAmmo == action.ammo.weaponSettingsSO.ClipSize) { return false; }
-        else if (action.ammo.weaponSettingsSO.ExtraAmmo == 0) { return false; }
+        if (action.ammo.weaponSettingsSO.CurrentAmmo == action.ammo.currentClipSize) { return false; }
+        else if (action.ammo.currentExtraAmmo == 0) { return false; }
         else return true;
     }
 }
