@@ -32,6 +32,7 @@ public class WeaponSettings : ScriptableObject
 
     [HideInInspector] private float currentAmmo;
     public float CurrentAmmo { get; set; }
+    //CurrentAmmo not scriptable.
 
     [Header("Bullet Capacity")]
 

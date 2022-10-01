@@ -6,7 +6,7 @@ public class WeaponManager : MonoBehaviour
 {
     [HideInInspector] public AudioSource audioSource;
 
-    [SerializeField] private WeaponSettings weaponSettingsSO;
+    public WeaponSettings weaponSettingsSO;
 
     private AimStateManager aim;
     private WeaponAmmo ammo;
@@ -17,7 +17,19 @@ public class WeaponManager : MonoBehaviour
     public UIManager uIManager;
 
     private bool semiAuto;
+
     private float fireRateTime;
+
+    [Header("Weapon Settings")]
+    public int currentID;
+    public string currentName;
+    public Sprite currentIcon;
+    public float currentFireRate;
+    public float currentBulletVelocity;
+    public int currentBulletPerShot;
+    public float currentDamage;
+    public int currentClipSize;
+    public float currentExtraAmmo;
 
     [Header("Referances")]
     [SerializeField] private Transform firePos;
@@ -27,28 +39,31 @@ public class WeaponManager : MonoBehaviour
     public ParticleSystem muzzleFlashParticle;
     public ParticleSystem bulletShellParticle;
 
-    //private Light muzzleFlashLight;
+    [Header("VFX Settings")]
+    [SerializeField] private float lightReturnSpeed = 0.5f;
 
-    //private float lightIntensity;
+    private Light muzzleFlashLight;
 
-    //[SerializeField] private float lightReturnSpeed = 2;
+    private float lightIntensity;
+
 
     private void Start()
     {
+        GetWeaponData();
+
         audioSource = GetComponent<AudioSource>();
         aim = GetComponentInParent<AimStateManager>();
         ammo = GetComponent<WeaponAmmo>();
         actions = GetComponentInParent<ActionStateManager>();
         weaponRecoil = GetComponent<WeaponRecoil>();
         weaponBloom = GetComponent<WeaponBloom>();
+        muzzleFlashLight = GetComponentInChildren<Light>();
 
-        //muzzleFlashLight = GetComponentInChildren<Light>();
+        fireRateTime = currentFireRate;
 
-        fireRateTime = weaponSettingsSO.FireRate;
+        lightIntensity = muzzleFlashLight.intensity;
 
-        //muzzleFlashLight.intensity = 0f;
-
-        //lightIntensity = muzzleFlashLight.intensity;
+        muzzleFlashLight.intensity = 0f;
     }
 
     private void Update()
@@ -60,18 +75,33 @@ public class WeaponManager : MonoBehaviour
             Fire();
         }
 
-        SwitchWeaponMode(uIManager.currentWeaponModeText.text);
+        muzzleFlashLight.intensity = Mathf.Lerp(muzzleFlashLight.intensity, 0, lightReturnSpeed * Time.deltaTime);
 
-        //muzzleFlashLight.intensity = Mathf.Lerp(muzzleFlashLight.intensity, 0, lightReturnSpeed * Time.deltaTime);
+        SwitchWeaponMode(uIManager.currentWeaponModeText.text);
+    }
+
+    public void GetWeaponData()
+    {
+        currentID = weaponSettingsSO.ID;
+        currentName = weaponSettingsSO.DisplayName;
+        currentIcon = weaponSettingsSO.Icon;
+        currentFireRate = weaponSettingsSO.FireRate;
+        currentBulletVelocity = weaponSettingsSO.BulletVelocity;
+        currentBulletPerShot = weaponSettingsSO.BulletPerShot;
+        currentDamage = weaponSettingsSO.Damage;
+        currentClipSize = weaponSettingsSO.ClipSize;
+        currentExtraAmmo = weaponSettingsSO.ExtraAmmo;
+
+        weaponSettingsSO.CurrentAmmo = weaponSettingsSO.ClipSize;
     }
 
     private bool ShouldFire()
     {
         fireRateTime += Time.deltaTime;
 
-        if (fireRateTime < weaponSettingsSO.FireRate) { return false; }
+        if (fireRateTime < currentFireRate) { return false; }
 
-        if (ammo.weaponSettingsSO.CurrentAmmo == 0) { return false; }
+        if (ammo.weaponManager.weaponSettingsSO.CurrentAmmo == 0) { return false; }
 
         if (actions.currentState == actions.Reload) { return false; }
 
@@ -99,21 +129,20 @@ public class WeaponManager : MonoBehaviour
         TriggerMuzzleFlash();
         TriggerBulletShell();
 
-        ammo.weaponSettingsSO.CurrentAmmo--;
+        ammo.weaponManager.weaponSettingsSO.CurrentAmmo--;
 
-        for (int i = 0; i < weaponSettingsSO.BulletPerShot; i++)
+        for (int i = 0; i < currentBulletPerShot; i++)
         {
             GameObject currentBullet = Instantiate(bullet, firePos.position, firePos.rotation);
             Rigidbody rb = currentBullet.GetComponent<Rigidbody>();
-            rb.AddForce(firePos.forward * weaponSettingsSO.BulletVelocity, ForceMode.Impulse);
+            rb.AddForce(firePos.forward * currentBulletVelocity, ForceMode.Impulse);
         }
     }
 
     private void TriggerMuzzleFlash()
     {
         muzzleFlashParticle.Play();
-
-        //muzzleFlashLight.intensity = lightIntensity;
+        muzzleFlashLight.intensity = lightIntensity;
     }
 
     private void TriggerBulletShell()

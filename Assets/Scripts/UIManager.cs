@@ -14,7 +14,7 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        currentAmmoText.text = weaponAmmo.weaponSettingsSO.CurrentAmmo.ToString();
-        extraAmmoText.text = "/" + weaponAmmo.currentExtraAmmo.ToString();
+        currentAmmoText.text = weaponAmmo.weaponManager.weaponSettingsSO.CurrentAmmo.ToString();
+        extraAmmoText.text = "/" + weaponAmmo.weaponManager.currentExtraAmmo.ToString();
     }
 }

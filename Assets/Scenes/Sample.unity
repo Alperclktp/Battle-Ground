@@ -1571,7 +1571,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &720157998
 Transform:
   m_ObjectHideFlags: 0
@@ -1599,7 +1599,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.659507, b: 0.1462264, a: 1}
-  m_Intensity: 2
+  m_Intensity: 0.5
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -3193,10 +3193,20 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   weaponSettingsSO: {fileID: 11400000, guid: 4d65939be25ca8d498587c2ea5fefe70, type: 2}
   uIManager: {fileID: 1065673261}
+  currentID: 0
+  currentName: 
+  currentIcon: {fileID: 0}
+  currentFireRate: 0
+  currentBulletVelocity: 0
+  currentBulletPerShot: 0
+  currentDamage: 0
+  currentClipSize: 0
+  currentExtraAmmo: 0
   firePos: {fileID: 1193850997}
   bullet: {fileID: 4924238349008114340, guid: f26a0a6c4bb4da64bb76b5ae1b8f612e, type: 3}
   muzzleFlashParticle: {fileID: 222940138}
   bulletShellParticle: {fileID: 18074100}
+  lightReturnSpeed: 2
 --- !u!82 &2015633460
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3305,9 +3315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0b6f68575b67741ab285f79dfe646f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponSettingsSO: {fileID: 11400000, guid: 4d65939be25ca8d498587c2ea5fefe70, type: 2}
-  currentExtraAmmo: 0
-  currentClipSize: 0
+  weaponManager: {fileID: 0}
 --- !u!114 &2015633462
 MonoBehaviour:
   m_ObjectHideFlags: 0

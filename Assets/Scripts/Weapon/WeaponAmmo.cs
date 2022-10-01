@@ -5,46 +5,38 @@ using UnityEngine;
 
 public class WeaponAmmo : MonoBehaviour
 {
-    public WeaponSettings weaponSettingsSO;
+    [HideInInspector] public WeaponManager weaponManager;
 
-    public float currentExtraAmmo;
-
-    public int currentClipSize;
-
-    private void Start()
+    private void Awake()
     {
-        currentExtraAmmo = weaponSettingsSO.ExtraAmmo;
-        currentClipSize = weaponSettingsSO.ClipSize;
-
-        weaponSettingsSO.CurrentAmmo = weaponSettingsSO.ClipSize;
-
+        weaponManager = GetComponent<WeaponManager>();
     }
 
     public void Reload()
     {
-        if (currentExtraAmmo >= weaponSettingsSO.ClipSize)
+        if (weaponManager.currentExtraAmmo >= weaponManager.currentClipSize)
         {
-            int ammoToReaload = (int)(weaponSettingsSO.ClipSize - weaponSettingsSO.CurrentAmmo);
+            int ammoToReaload = (int)(weaponManager.currentClipSize - weaponManager.weaponSettingsSO.CurrentAmmo);
 
-            currentExtraAmmo -= ammoToReaload;
+            weaponManager.currentExtraAmmo -= ammoToReaload;
 
-            weaponSettingsSO.CurrentAmmo += ammoToReaload;
+            weaponManager.weaponSettingsSO.CurrentAmmo += ammoToReaload;
         }
-        else if (currentExtraAmmo > 0)
+        else if (weaponManager.currentExtraAmmo > 0)
         {
-            if (currentExtraAmmo + weaponSettingsSO.CurrentAmmo > weaponSettingsSO.ClipSize)
+            if (weaponManager.currentExtraAmmo + weaponManager.weaponSettingsSO.CurrentAmmo > weaponManager.currentClipSize)
             {
-                int leftOverAmmo = (int)(currentExtraAmmo + weaponSettingsSO.CurrentAmmo - weaponSettingsSO.ClipSize);
+                int leftOverAmmo = (int)(weaponManager.currentExtraAmmo + weaponManager.weaponSettingsSO.CurrentAmmo - weaponManager.currentClipSize);
 
-                currentExtraAmmo = leftOverAmmo;
+                weaponManager.currentExtraAmmo = leftOverAmmo;
 
-                currentExtraAmmo = weaponSettingsSO.ClipSize;
+                weaponManager.currentExtraAmmo = weaponManager.currentClipSize;
             }
             else
             {
-                weaponSettingsSO.CurrentAmmo += currentExtraAmmo;
+                weaponManager.weaponSettingsSO.CurrentAmmo += weaponManager.currentExtraAmmo;
 
-                currentExtraAmmo = 0;
+                weaponManager.currentExtraAmmo = 0;
             }
         }
     }
