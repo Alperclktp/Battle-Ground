@@ -6,35 +6,19 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private float destroyTime;
 
-    //private float timer;
-
     private void Start()
     {
         Destroy(this.gameObject, destroyTime);
-    }
-
-    private void Update()
-    {
-        /*
-        timer += Time.deltaTime;
-
-
-        if(timer >= destroyTime)
-        {
-            Destroy(this.gameObject);
-        }
-        */
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         Destroy(this.gameObject);
 
-        if(collision.transform.GetComponent<Enemy>() != null)
+        IDamageable damageable = collision.transform.GetComponent<IDamageable>();
+        if(damageable != null)
         {
-            collision.transform.GetComponent<Enemy>().TakeDamage(10);
-
-            Debug.Log("Hit the enemy: " + collision.transform.GetComponent<Enemy>().health);
+            damageable.TakeDamage(10); //Vereceði damage deðerini WeaponManager'in içindeki currentDamage ile vermesi gerekiyor.
         }
     }
 }
