@@ -2364,6 +2364,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1193850997}
+  - component: {fileID: 1193850998}
   m_Layer: 0
   m_Name: FirePos
   m_TagString: Untagged
@@ -2388,6 +2389,20 @@ Transform:
   m_Father: {fileID: 4792254471567638}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &1193850998
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193850996}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.06
+  m_Height: 0.06
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1281299905
 GameObject:
   m_ObjectHideFlags: 0
@@ -2579,7 +2594,7 @@ RectTransform:
   m_GameObject: {fileID: 1443685424}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5998372, y: 0.5998372, z: 0.5998372}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 496227053}
@@ -3178,35 +3193,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2015633456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1042020990363664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30ba8bf0aa30b6544a55c112864d6a36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioSource: {fileID: 0}
-  weaponSettingsSO: {fileID: 11400000, guid: 4d65939be25ca8d498587c2ea5fefe70, type: 2}
-  uIManager: {fileID: 1065673261}
-  currentID: 0
-  currentName: 
-  currentIcon: {fileID: 0}
-  currentFireRate: 0
-  currentBulletVelocity: 0
-  currentBulletPerShot: 0
-  currentDamage: 0
-  currentClipSize: 0
-  currentExtraAmmo: 0
-  firePos: {fileID: 1193850997}
-  bullet: {fileID: 4924238349008114340, guid: f26a0a6c4bb4da64bb76b5ae1b8f612e, type: 3}
-  muzzleFlashParticle: {fileID: 222940138}
-  bulletShellParticle: {fileID: 18074100}
-  lightReturnSpeed: 2
 --- !u!82 &2015633460
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3451,7 +3437,7 @@ GameObject:
   - component: {fileID: 23230645732809094}
   - component: {fileID: 64257311473870720}
   - component: {fileID: 2015633460}
-  - component: {fileID: 2015633456}
+  - component: {fileID: 64257311473870722}
   - component: {fileID: 2015633461}
   - component: {fileID: 2015633462}
   - component: {fileID: 64257311473870721}
@@ -6133,6 +6119,35 @@ MonoBehaviour:
   crouchBloomMultiplier: 0.5
   sprintBloomMultiplier: 2
   adsBloomMultiplier: 0.5
+--- !u!114 &64257311473870722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042020990363664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30ba8bf0aa30b6544a55c112864d6a36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
+  weaponSettingsSO: {fileID: 11400000, guid: 4d65939be25ca8d498587c2ea5fefe70, type: 2}
+  uIManager: {fileID: 1065673261}
+  currentID: 0
+  currentName: 
+  currentIcon: {fileID: 0}
+  currentFireRate: 0
+  currentBulletVelocity: 0
+  currentBulletPerShot: 0
+  currentDamage: 0
+  currentClipSize: 0
+  currentExtraAmmo: 0
+  firePos: {fileID: 1193850997}
+  bullet: {fileID: 4924238349008114340, guid: f26a0a6c4bb4da64bb76b5ae1b8f612e, type: 3}
+  muzzleFlashParticle: {fileID: 222940138}
+  bulletShellParticle: {fileID: 18074100}
+  lightReturnSpeed: 2
 --- !u!95 &95880591241329424
 Animator:
   serializedVersion: 4

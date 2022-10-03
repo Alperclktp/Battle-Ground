@@ -6,19 +6,26 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private float destroyTime;
 
+    [ReadOnly] public float damageValue;
+
     private void Start()
     {
-        Destroy(this.gameObject, destroyTime);
+        //Destroy(this.gameObject, destroyTime);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         Destroy(this.gameObject);
 
+        DealDamage(collision);
+    }
+
+    private void DealDamage(Collision collision)
+    {
         IDamageable damageable = collision.transform.GetComponent<IDamageable>();
-        if(damageable != null)
+        if (damageable != null)
         {
-            damageable.TakeDamage(10); //Vereceði damage deðerini WeaponManager'in içindeki currentDamage ile vermesi gerekiyor.
+            damageable.TakeDamage(damageValue);
         }
     }
 }

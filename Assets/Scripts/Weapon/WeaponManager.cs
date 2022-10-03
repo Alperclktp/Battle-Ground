@@ -46,7 +46,6 @@ public class WeaponManager : MonoBehaviour
 
     private float lightIntensity;
 
-
     private void Start()
     {
         GetWeaponData();
@@ -88,11 +87,21 @@ public class WeaponManager : MonoBehaviour
         currentFireRate = weaponSettingsSO.FireRate;
         currentBulletVelocity = weaponSettingsSO.BulletVelocity;
         currentBulletPerShot = weaponSettingsSO.BulletPerShot;
-        currentDamage = weaponSettingsSO.Damage;
         currentClipSize = weaponSettingsSO.ClipSize;
         currentExtraAmmo = weaponSettingsSO.ExtraAmmo;
 
+        currentDamage = weaponSettingsSO.Damage;
+
         weaponSettingsSO.CurrentAmmo = weaponSettingsSO.ClipSize;
+    }
+
+    public void DealDamage(Collision collision)
+    {
+        IDamageable damageable = collision.transform.GetComponent<IDamageable>();
+        if (damageable != null)
+        {
+            damageable.TakeDamage(currentDamage);
+        }
     }
 
     private bool ShouldFire()
@@ -135,6 +144,7 @@ public class WeaponManager : MonoBehaviour
         {
             GameObject currentBullet = Instantiate(bullet, firePos.position, firePos.rotation);
             Rigidbody rb = currentBullet.GetComponent<Rigidbody>();
+            currentBullet.GetComponent<Bullet>().damageValue = currentDamage;
             rb.AddForce(firePos.forward * currentBulletVelocity, ForceMode.Impulse);
         }
     }
