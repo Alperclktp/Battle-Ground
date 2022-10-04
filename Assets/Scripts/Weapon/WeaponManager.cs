@@ -94,16 +94,6 @@ public class WeaponManager : MonoBehaviour
 
         weaponSettingsSO.CurrentAmmo = weaponSettingsSO.ClipSize;
     }
-
-    public void DealDamage(Collision collision)
-    {
-        IDamageable damageable = collision.transform.GetComponent<IDamageable>();
-        if (damageable != null)
-        {
-            damageable.TakeDamage(currentDamage);
-        }
-    }
-
     private bool ShouldFire()
     {
         fireRateTime += Time.deltaTime;
